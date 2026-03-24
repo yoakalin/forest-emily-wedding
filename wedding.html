@@ -55,8 +55,8 @@
       min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: calc(env(safe-area-inset-top, 0px) + 52px) 28px 52px;
+      justify-content: flex-start;
+      padding: calc(env(safe-area-inset-top, 0px) + 60px) 28px 340px;
       background: var(--bg);
       position: relative;
       overflow: hidden;
@@ -82,24 +82,36 @@
       pointer-events: none;
     }
 
-    /* ── Couple illustration (below names) ── */
-    .hero-illustration {
-      display: flex;
-      justify-content: center;
-      margin-top: 28px;
+    /* ── Couple illustration — background layer ── */
+    .hero-fg {
       position: relative;
+      z-index: 3;
+    }
+
+    .hero-couple-bg {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 96%;
+      max-width: 460px;
       z-index: 1;
+      pointer-events: none;
     }
 
-    .couple-wrap {
-      width: 76%;
-      max-width: 300px;
-      position: relative;
+    /* fade bottom so it bleeds into next section */
+    .hero-couple-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 30%;
+      background: linear-gradient(to bottom, transparent, var(--bg));
     }
 
-    .couple-img {
+    .couple-bg-img {
       display: block;
       width: 100%;
+      mix-blend-mode: multiply;
     }
 
     /* Floating confetti */
@@ -618,31 +630,23 @@
   <span class="confetti" style="left:88%;top:48%;font-size:11px;animation-duration:6s;animation-delay:-3s">🌿</span>
   <span class="confetti" style="left:75%;top:72%;font-size:13px;animation-duration:7.5s;animation-delay:-5s">🩷</span>
 
-  <!-- tag -->
-  <div class="hero-tag">
-    <span class="dot"></span>
-    文定之喜 · Engagement Ceremony
+  <!-- couple illustration — background layer -->
+  <div class="hero-couple-bg">
+    <img src="LINE_ALBUM_24032026_260324_2.jpg" alt="Forest &amp; Emily" class="couple-bg-img">
   </div>
 
-  <!-- names -->
-  <div class="hero-names">
-    Forest
-    <span class="em">&amp; Emily</span>
-  </div>
-  <div class="hero-rule"></div>
-  <p class="hero-sub">2026.05.24 · 台北新板希爾頓</p>
-
-  <!-- couple illustration BELOW the names -->
-  <div class="hero-illustration">
-    <div class="couple-wrap">
-      <img
-        src="couple-nobg.png"
-        alt="Forest &amp; Emily"
-        class="couple-img"
-        id="coupleImg"
-        onerror="this.style.display='none'"
-      >
+  <!-- foreground text -->
+  <div class="hero-fg">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      文定之喜 · Engagement Ceremony
     </div>
+    <div class="hero-names">
+      Forest
+      <span class="em">&amp; Emily</span>
+    </div>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">2026.05.24 · 台北新板希爾頓</p>
   </div>
 
   <div class="scroll-hint">
@@ -739,15 +743,13 @@
 
   <!-- Map image -->
   <div class="map-card">
-    <img src="map.png" alt="Hilton Taipei Sinban 地圖路線" class="map-img"
-         onerror="this.closest('.map-card').style.display='none'">
+    <img src="LINE_ALBUM_24032026_260324_4.jpg" alt="Hilton Taipei Sinban 地圖路線" class="map-img">
   </div>
 
   <!-- QR + Google Maps row -->
   <div class="map-row">
     <div class="qr-card">
-      <img src="qr.png" alt="掃描導航" class="qr-img"
-           onerror="this.closest('.qr-card').style.display='none'">
+      <img src="LINE_ALBUM_24032026_260324_5.jpg" alt="掃描導航" class="qr-img">
       <p class="qr-label">掃描 QR<br>開啟地圖導航</p>
     </div>
     <button class="btn map-btn" id="btn-map2">
