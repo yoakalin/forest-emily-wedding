@@ -153,18 +153,28 @@
 
     .hero-names {
       font-family: 'Noto Serif TC', 'Playfair Display', serif;
-      font-size: clamp(58px, 18vw, 92px);
+      font-size: clamp(52px, 16vw, 84px);
       font-weight: 900;
-      line-height: .95;
-      letter-spacing: .02em;
+      line-height: 1;
+      letter-spacing: .04em;
       color: var(--coffee-dark);
     }
     .hero-names .em {
       font-style: normal;
-      color: var(--sky);
+      color: var(--coffee-dark);
+      display: inline;
+      font-weight: 900;
+      font-size: inherit;
+    }
+    .hero-names-en {
       display: block;
-      font-weight: 700;
-      font-size: clamp(50px, 15vw, 78px);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(13px, 3.5vw, 18px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sky);
+      letter-spacing: .12em;
+      margin-top: 8px;
     }
 
     .hero-rule {
@@ -646,8 +656,8 @@
       文定之喜 · Engagement Ceremony
     </div>
     <div class="hero-names">
-      廖柏豪
-      <span class="em">林書宇</span>
+      廖柏豪 <span class="em">林書宇</span>
+      <span class="hero-names-en">Forest &amp; Emily</span>
     </div>
     <div class="hero-rule"></div>
     <p class="hero-sub">2026.05.24 · 台北新板希爾頓</p>
