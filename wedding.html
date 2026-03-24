@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Forest &amp; Emily · Wedding</title>
+  <title>Forest &amp; Emily · 文定之喜</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -14,17 +14,20 @@
 
     /* ── Tokens ── */
     :root {
-      --bg:        #18110e;
-      --bg2:       #221712;
-      --bg3:       #2d1f18;
+      --bg:        #2a2118;
+      --bg2:       #342a1f;
+      --bg3:       #3e3228;
       --cream:     #f5ede0;
       --cream2:    #ede3d4;
       --gold:      #c9a074;
       --gold-lt:   #e8cfa8;
       --gold-dim:  rgba(201,160,116,.15);
-      --border:    rgba(201,160,116,.18);
-      --text:      #f2ebe2;
-      --muted:     #9b8572;
+      --border:    rgba(201,160,116,.2);
+      --sky:       #7ec8e3;
+      --sky-dim:   rgba(126,200,227,.14);
+      --sky-border:rgba(126,200,227,.25);
+      --text:      #f4ede4;
+      --muted:     #a8937f;
       --r-lg:      18px;
       --r-md:      12px;
     }
@@ -71,7 +74,7 @@
       transform: translateX(-50%);
       width: 120%;
       height: 60%;
-      background: radial-gradient(ellipse, rgba(201,160,116,.18) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(126,200,227,.12) 0%, rgba(201,160,116,.1) 50%, transparent 70%);
       pointer-events: none;
     }
 
@@ -150,21 +153,21 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--gold-dim);
-      border: 1px solid var(--border);
+      background: var(--sky-dim);
+      border: 1px solid var(--sky-border);
       border-radius: 100px;
       padding: 6px 14px;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--sky);
       width: fit-content;
       margin-bottom: 20px;
     }
     .hero-tag .dot {
       width: 5px; height: 5px;
-      background: var(--gold);
+      background: var(--sky);
       border-radius: 50%;
       animation: blink 2.4s ease-in-out infinite;
     }
@@ -315,7 +318,7 @@
       font-family: 'Inter', sans-serif;
       font-size: clamp(22px, 6.5vw, 30px);
       font-weight: 900;
-      color: var(--gold);
+      color: var(--sky);
       line-height: 1;
       display: block;
       letter-spacing: -.03em;
@@ -394,7 +397,7 @@
     .transport-title { flex: 1; font-size: 13px; font-weight: 700; letter-spacing: .03em; }
     .transport-chevron {
       font-size: 11px;
-      color: var(--gold);
+      color: var(--sky);
       transition: transform .25s;
     }
     .transport-card.open .transport-chevron { transform: rotate(180deg); }
@@ -418,13 +421,13 @@
     .transport-item:last-child { border-bottom: none; padding-bottom: 0; }
     .transport-item .tag {
       flex-shrink: 0;
-      background: var(--gold-dim);
-      border: 1px solid var(--border);
+      background: var(--sky-dim);
+      border: 1px solid var(--sky-border);
       border-radius: 6px;
       padding: 1px 6px;
       font-size: 9px;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--sky);
       letter-spacing: .08em;
       white-space: nowrap;
       height: fit-content;
@@ -619,14 +622,14 @@
   <div class="hero-content">
     <div class="hero-tag">
       <span class="dot"></span>
-      Wedding Invitation · 婚禮邀請
+      文定之喜 · Engagement Ceremony
     </div>
     <div class="hero-names">
       Forest
       <span class="em">&amp; Emily</span>
     </div>
     <div class="hero-rule"></div>
-    <p class="hero-sub">We're getting married · 我們要結婚了</p>
+    <p class="hero-sub">文定之喜 · Engagement Ceremony</p>
 
     <div class="scroll-hint">
       <div class="arrow"></div>
@@ -637,15 +640,15 @@
 
 <!-- ══ INFO ══ -->
 <section>
-  <div class="label">Wedding Details · 婚宴資訊</div>
+  <div class="label">Event Details · 活動資訊</div>
 
   <div class="info-card">
     <div class="info-card-row">
       <span class="info-card-emoji">🗓</span>
       <div>
         <div class="info-card-label">Date · 日期</div>
-        <div class="info-card-value">2026.05.30</div>
-        <div class="info-card-sub">Saturday · 星期六</div>
+        <div class="info-card-value">2026.05.24</div>
+        <div class="info-card-sub">Sunday · 星期日</div>
         <span class="info-badge">請提前告知是否出席</span>
       </div>
     </div>
@@ -653,11 +656,11 @@
 
   <div class="info-card">
     <div class="info-card-row">
-      <span class="info-card-emoji">🕕</span>
+      <span class="info-card-emoji">🕛</span>
       <div>
         <div class="info-card-label">Time · 時間</div>
-        <div class="info-card-value">18:00 入席</div>
-        <div class="info-card-sub">18:30 典禮正式開始</div>
+        <div class="info-card-value">12:00 午宴</div>
+        <div class="info-card-sub">敬請準時蒞臨</div>
       </div>
     </div>
   </div>
@@ -677,7 +680,7 @@
 
 <!-- ══ COUNTDOWN ══ -->
 <section>
-  <div class="label">Counting Down · 距離婚禮還有</div>
+  <div class="label">Counting Down · 距離文定還有</div>
   <div class="countdown-grid">
     <div class="cd-box"><span class="cd-num" id="cd-d">--</span><div class="cd-lbl">Days</div></div>
     <div class="cd-box"><span class="cd-num" id="cd-h">--</span><div class="cd-lbl">Hours</div></div>
@@ -822,7 +825,7 @@
 <section>
   <div class="label">RSVP · 出席回覆</div>
   <div class="rsvp-title">告訴我們<br>你會來 <em>嗎</em> ？</div>
-  <p class="rsvp-desc">請在 <strong style="color:var(--gold)">2026.05.10</strong> 前填寫，讓我們為每一位賓客準備最好的一切 🌿</p>
+  <p class="rsvp-desc">請在 <strong style="color:var(--gold)">2026.05.15</strong> 前填寫，讓我們為每一位賓客準備最好的一切 🌿</p>
 
   <form id="rsvpForm" novalidate>
     <div class="form-row">
@@ -867,20 +870,20 @@
   <div class="success-card" id="successCard">
     <span class="success-icon">🥂</span>
     <div class="success-title">謝謝你！</div>
-    <p class="success-sub">Forest &amp; Emily 已收到你的回覆<br>非常期待在婚禮上與你相聚 ✨</p>
+    <p class="success-sub">Forest &amp; Emily 已收到你的回覆<br>非常期待在文定之喜與你相聚 ✨</p>
   </div>
 </section>
 
 <footer>
   <p><strong>Forest &amp; Emily</strong></p>
-  <p>2026.05.30 · 台北新板希爾頓 · 如意廳</p>
+  <p>2026.05.24 · 台北新板希爾頓 · 如意廳</p>
   <p><a href="tel:+886229583000">+886 2 2958 3000</a></p>
   <p style="margin-top:10px">Made with 🩷 for our special day</p>
 </footer>
 
 <script>
   /* ── Countdown ── */
-  const WEDDING = new Date('2026-05-30T18:00:00+08:00');
+  const WEDDING = new Date('2026-05-24T12:00:00+08:00');
   const pad = n => String(n).padStart(2,'0');
   function tick(){
     const diff = WEDDING - new Date();
@@ -913,9 +916,9 @@
 
   /* ── Calendar ── */
   document.getElementById('btn-cal').addEventListener('click', () => {
-    const t = encodeURIComponent('Forest & Emily 婚禮 🩷');
+    const t = encodeURIComponent('Forest & Emily 文定之喜 🩷');
     const l = encodeURIComponent('台北新板希爾頓酒店 宴會樓2F如意CDE廳, 220690新北市板橋區民權路88號');
-    window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260530T100000Z/20260530T140000Z&location=${l}&sf=true&output=xml`,'_blank');
+    window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260524T040000Z/20260524T080000Z&location=${l}&sf=true&output=xml`,'_blank');
   });
 
   /* ── Burst ── */
