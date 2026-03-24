@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSVP 後台 · Forest &amp; Emily</title>
+  <title>RSVP 後台 · 廖柏豪 &amp; 林書宇</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
   <style>
@@ -465,7 +465,7 @@
     const csv = '\uFEFF' + [header.join(','), ...rows].join('\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
-    a.download = `Forest_Emily_RSVP_${new Date().toLocaleDateString('zh-TW').replace(/\//g,'-')}.csv`;
+    a.download = `柏豪書宇_RSVP_${new Date().toLocaleDateString('zh-TW').replace(/\//g,'-')}.csv`;
     a.click();
   }
 

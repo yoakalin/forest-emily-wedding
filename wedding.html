@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Forest &amp; Emily · 文定之喜</title>
+  <title>廖柏豪 林書宇 · 文定之喜</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
   <style>
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,7 +43,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: 'Inter', -apple-system, sans-serif;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
@@ -152,17 +152,19 @@
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
     .hero-names {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(54px, 17vw, 88px);
-      font-weight: 700;
-      line-height: .92;
-      letter-spacing: -.025em;
+      font-family: 'Noto Serif TC', 'Playfair Display', serif;
+      font-size: clamp(58px, 18vw, 92px);
+      font-weight: 900;
+      line-height: .95;
+      letter-spacing: .02em;
       color: var(--coffee-dark);
     }
     .hero-names .em {
-      font-style: italic;
+      font-style: normal;
       color: var(--sky);
       display: block;
+      font-weight: 700;
+      font-size: clamp(50px, 15vw, 78px);
     }
 
     .hero-rule {
@@ -634,7 +636,7 @@
 
   <!-- couple illustration — background layer -->
   <div class="hero-couple-bg">
-    <img src="couple-white.png" alt="Forest &amp; Emily" class="couple-bg-img">
+    <img src="couple-white.png" alt="廖柏豪 林書宇" class="couple-bg-img">
   </div>
 
   <!-- foreground text -->
@@ -644,8 +646,8 @@
       文定之喜 · Engagement Ceremony
     </div>
     <div class="hero-names">
-      Forest
-      <span class="em">&amp; Emily</span>
+      廖柏豪
+      <span class="em">林書宇</span>
     </div>
     <div class="hero-rule"></div>
     <p class="hero-sub">2026.05.24 · 台北新板希爾頓</p>
@@ -898,7 +900,7 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">給 Forest &amp; Emily 的祝福 ✨</label>
+      <label class="form-label">給 廖柏豪 &amp; 林書宇 的祝福 ✨</label>
       <textarea id="f-wish" class="form-input" placeholder="寫下你最真摯的祝福，讓新人感受到你的愛…"></textarea>
     </div>
 
@@ -908,12 +910,12 @@
   <div class="success-card" id="successCard">
     <span class="success-icon">🥂</span>
     <div class="success-title">謝謝你！</div>
-    <p class="success-sub">Forest &amp; Emily 已收到你的回覆<br>非常期待在文定之喜與你相聚 ✨</p>
+    <p class="success-sub">廖柏豪 &amp; 林書宇 已收到你的回覆<br>非常期待在文定之喜與你相聚 ✨</p>
   </div>
 </section>
 
 <footer>
-  <p><strong>Forest &amp; Emily</strong></p>
+  <p><strong>廖柏豪 &amp; 林書宇</strong></p>
   <p>2026.05.24 · 台北新板希爾頓 · 如意廳</p>
   <p><a href="tel:+886229583000">+886 2 2958 3000</a></p>
   <p style="margin-top:10px">Made with 🩷 for our special day</p>
@@ -956,7 +958,7 @@
 
   /* ── Calendar ── */
   document.getElementById('btn-cal').addEventListener('click', () => {
-    const t = encodeURIComponent('Forest & Emily 文定之喜 🩷');
+    const t = encodeURIComponent('廖柏豪 & 林書宇 文定之喜 🩷');
     const l = encodeURIComponent('台北新板希爾頓酒店 宴會樓2F如意CDE廳, 220690新北市板橋區民權路88號');
     window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260524T040000Z/20260524T080000Z&location=${l}&sf=true&output=xml`,'_blank');
   });
