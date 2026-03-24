@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Forest &amp; Emily · Wedding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ── Tokens ── */
+    :root {
+      --bg:        #18110e;
+      --bg2:       #221712;
+      --bg3:       #2d1f18;
+      --cream:     #f5ede0;
+      --cream2:    #ede3d4;
+      --gold:      #c9a074;
+      --gold-lt:   #e8cfa8;
+      --gold-dim:  rgba(201,160,116,.15);
+      --border:    rgba(201,160,116,.18);
+      --text:      #f2ebe2;
+      --muted:     #9b8572;
+      --r-lg:      18px;
+      --r-md:      12px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ══════════════════════════════════
+       HERO
+    ══════════════════════════════════ */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Top: cream illustration zone ── */
+    .hero-visual {
+      flex: 1;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: calc(env(safe-area-inset-top, 0px) + 32px) 24px 0;
+      position: relative;
+    }
+
+    /* top ambient glow on cream bg */
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(201,160,116,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* fade cream → dark */
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ── Couple illustration ── */
+    .couple-wrap {
+      position: relative;
+      z-index: 1;
+      width: 82%;
+      max-width: 320px;
+    }
+
+    .couple-img {
+      display: block;
+      width: 100%;
+      mix-blend-mode: multiply; /* removes white bg on cream surface */
+      filter: drop-shadow(0 -8px 24px rgba(201,160,116,.15));
+    }
+
+    /* Placeholder shown when image missing */
+    .couple-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 72px;
+      color: rgba(201,160,116,.4);
+      border: 2px dashed rgba(201,160,116,.25);
+      border-radius: 24px;
+      background: rgba(201,160,116,.04);
+    }
+    .couple-placeholder p {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-align: center;
+      line-height: 1.6;
+      padding: 0 16px;
+    }
+
+    /* floating confetti on cream */
+    .confetti {
+      position: absolute;
+      font-size: 16px;
+      animation: drift linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes drift {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: .8; }
+      100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Bottom: dark text zone ── */
+    .hero-content {
+      background: var(--bg);
+      padding: 12px 28px 52px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      width: fit-content;
+      margin-bottom: 20px;
+    }
+    .hero-tag .dot {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: blink 2.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero-names {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(54px, 17vw, 88px);
+      font-weight: 700;
+      line-height: .92;
+      letter-spacing: -.025em;
+    }
+    .hero-names .em {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-rule {
+      width: 36px; height: 1px;
+      background: var(--gold);
+      margin: 20px 0 14px;
+    }
+
+    .hero-sub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 20px;
+      right: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .scroll-hint .arrow {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: slide 2s ease-in-out infinite;
+    }
+    @keyframes slide { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(.5);opacity:.3} }
+
+    /* ══════════════════════════════════
+       SHARED LAYOUT
+    ══════════════════════════════════ */
+    section { padding: 0 24px 52px; }
+
+    .label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 24px;
+      margin-bottom: 52px;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-icon { font-size: 12px; color: var(--gold); }
+
+    /* ══════════════════════════════════
+       INFO CARDS
+    ══════════════════════════════════ */
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 20px 20px 18px;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,160,116,.4), transparent);
+    }
+    .info-card-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .info-card-emoji { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .info-card-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .info-card-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .info-card-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+    .info-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--gold-dim);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 8px;
+    }
+
+    /* ══════════════════════════════════
+       COUNTDOWN
+    ══════════════════════════════════ */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .cd-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 18px 6px 14px;
+      text-align: center;
+    }
+    .cd-num {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(22px, 6.5vw, 30px);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      letter-spacing: -.03em;
+    }
+    .cd-lbl {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ══════════════════════════════════
+       ACTION BUTTONS
+    ══════════════════════════════════ */
+    .btn-row { display: flex; flex-direction: column; gap: 10px; }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 17px 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .18s, border-color .18s, transform .12s;
+      user-select: none;
+    }
+    .btn:active { transform: scale(.97); background: var(--bg3); border-color: rgba(201,160,116,.35); }
+
+    .btn-left { display: flex; align-items: center; gap: 12px; }
+    .btn-icon { font-size: 19px; }
+    .btn-arrow { color: var(--gold); font-size: 18px; transition: transform .18s; }
+    .btn:active .btn-arrow { transform: translateX(3px); }
+
+    .btn-gold {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+    }
+    .btn-gold:active { background: var(--gold-lt); border-color: var(--gold-lt); }
+    .btn-gold .btn-arrow { color: rgba(24,17,14,.5); }
+
+    /* ══════════════════════════════════
+       TRANSPORT
+    ══════════════════════════════════ */
+    .transport-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .transport-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .transport-head:active { background: var(--bg3); }
+
+    .transport-icon { font-size: 18px; flex-shrink: 0; }
+    .transport-title { flex: 1; font-size: 13px; font-weight: 700; letter-spacing: .03em; }
+    .transport-chevron {
+      font-size: 11px;
+      color: var(--gold);
+      transition: transform .25s;
+    }
+    .transport-card.open .transport-chevron { transform: rotate(180deg); }
+
+    .transport-body {
+      display: none;
+      padding: 0 18px 16px 44px;
+      border-top: 1px solid var(--border);
+    }
+    .transport-card.open .transport-body { display: block; }
+
+    .transport-item {
+      display: flex;
+      gap: 8px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(201,160,116,.08);
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .transport-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .transport-item .tag {
+      flex-shrink: 0;
+      background: var(--gold-dim);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: .08em;
+      white-space: nowrap;
+      height: fit-content;
+      margin-top: 1px;
+    }
+
+    /* parking mini grid */
+    .parking-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding-top: 10px;
+    }
+    .parking-item {
+      background: rgba(201,160,116,.06);
+      border: 1px solid rgba(201,160,116,.12);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .parking-item strong { display: block; font-weight: 700; color: var(--text); font-size: 12px; }
+
+    /* ══════════════════════════════════
+       RSVP
+    ══════════════════════════════════ */
+    .rsvp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 9.5vw, 42px);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .rsvp-title em { font-style: italic; color: var(--gold); }
+
+    .rsvp-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .form-group { margin-bottom: 14px; }
+    .form-label {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 14px 17px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-input::placeholder { color: var(--muted); font-size: 14px; }
+    .form-input:focus { border-color: rgba(201,160,116,.6); }
+    select.form-input { cursor: pointer; }
+
+    textarea.form-input {
+      resize: none;
+      height: 108px;
+      line-height: 1.6;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 17px;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--r-lg);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: all .2s;
+      margin-top: 6px;
+    }
+    .submit-btn:active { transform: scale(.97); background: var(--gold-lt); }
+
+    /* ── Success ── */
+    .success-card {
+      display: none;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 44px 28px;
+      text-align: center;
+    }
+    .success-card.show { display: block; animation: fadeIn .4s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    .success-icon { font-size: 50px; display: block; margin-bottom: 16px; }
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .success-sub { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ══════════════════════════════════
+       PARTICLES
+    ══════════════════════════════════ */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      bottom: 10%;
+      animation: rise linear forwards;
+      opacity: 0;
+    }
+    @keyframes rise {
+      0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+      100% { opacity: 0; transform: translateY(-75vh) rotate(45deg) scale(.3); }
+    }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    footer {
+      padding: 28px 24px calc(28px + env(safe-area-inset-bottom, 0));
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer p {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .12em;
+      line-height: 2;
+    }
+    footer strong { color: var(--gold); font-weight: 700; }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+
+  <!-- Cream illustration zone -->
+  <div class="hero-visual">
+
+    <!-- floating confetti (decorative) -->
+    <span class="confetti" style="left:8%;top:10%;animation-duration:6s;animation-delay:-1s">🌸</span>
+    <span class="confetti" style="left:80%;top:6%;animation-duration:7s;animation-delay:-3s">💕</span>
+    <span class="confetti" style="left:20%;top:20%;animation-duration:8s;animation-delay:-5s">✨</span>
+    <span class="confetti" style="left:70%;top:18%;animation-duration:5.5s;animation-delay:-2s">🌿</span>
+    <span class="confetti" style="left:50%;top:5%;animation-duration:9s;animation-delay:-4s">🩷</span>
+    <span class="confetti" style="left:90%;top:28%;animation-duration:6.5s;animation-delay:-0.5s">💐</span>
+
+    <div class="couple-wrap">
+      <!-- Place couple.png in the same folder as this file -->
+      <img
+        src="couple.png"
+        alt="Forest &amp; Emily"
+        class="couple-img"
+        id="coupleImg"
+        onerror="this.style.display='none';document.getElementById('couplePlaceholder').style.display='flex';"
+      >
+      <div class="couple-placeholder" id="couplePlaceholder" style="display:none">
+        <span>👫</span>
+        <p>將插圖存為 <strong>couple.png</strong><br>放入同一資料夾即可顯示</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark text zone -->
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      Wedding Invitation · 婚禮邀請
+    </div>
+    <div class="hero-names">
+      Forest
+      <span class="em">&amp; Emily</span>
+    </div>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">We're getting married · 我們要結婚了</p>
+
+    <div class="scroll-hint">
+      <div class="arrow"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ INFO ══ -->
+<section>
+  <div class="label">Wedding Details · 婚宴資訊</div>
+
+  <div class="info-card">
+    <div class="info-card-row">
+      <span class="info-card-emoji">🗓</span>
+      <div>
+        <div class="info-card-label">Date · 日期</div>
+        <div class="info-card-value">2026.05.30</div>
+        <div class="info-card-sub">Saturday · 星期六</div>
+        <span class="info-badge">請提前告知是否出席</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-card-row">
+      <span class="info-card-emoji">🕕</span>
+      <div>
+        <div class="info-card-label">Time · 時間</div>
+        <div class="info-card-value">18:00 入席</div>
+        <div class="info-card-sub">18:30 典禮正式開始</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-card-row">
+      <span class="info-card-emoji">📍</span>
+      <div>
+        <div class="info-card-label">Venue · 地點</div>
+        <div class="info-card-value">宴會樓 2F · 如意 CDE 廳</div>
+        <div class="info-card-sub">台北新板希爾頓酒店<br>220690 新北市板橋區民權路 88 號</div>
+        <span class="info-badge">T: +886 2 2958 3000</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COUNTDOWN ══ -->
+<section>
+  <div class="label">Counting Down · 距離婚禮還有</div>
+  <div class="countdown-grid">
+    <div class="cd-box"><span class="cd-num" id="cd-d">--</span><div class="cd-lbl">Days</div></div>
+    <div class="cd-box"><span class="cd-num" id="cd-h">--</span><div class="cd-lbl">Hours</div></div>
+    <div class="cd-box"><span class="cd-num" id="cd-m">--</span><div class="cd-lbl">Mins</div></div>
+    <div class="cd-box"><span class="cd-num" id="cd-s">--</span><div class="cd-lbl">Secs</div></div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-icon">✦</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ══ QUICK ACTIONS ══ -->
+<section>
+  <div class="label">Quick Actions · 快速功能</div>
+  <div class="btn-row">
+    <button class="btn" id="btn-map">
+      <span class="btn-left"><span class="btn-icon">🗺</span> 一鍵導航到會場</span>
+      <span class="btn-arrow">→</span>
+    </button>
+    <button class="btn" id="btn-cal">
+      <span class="btn-left"><span class="btn-icon">📅</span> 加入行事曆提醒</span>
+      <span class="btn-arrow">→</span>
+    </button>
+    <button class="btn btn-gold" id="btn-heart">
+      <span class="btn-left"><span class="btn-icon">🩷</span> 送上滿滿愛心祝福</span>
+      <span class="btn-arrow">→</span>
+    </button>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-icon">✦</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ══ TRANSPORT ══ -->
+<section>
+  <div class="label">Getting Here · 交通資訊</div>
+
+  <!-- MRT -->
+  <div class="transport-card open">
+    <div class="transport-head" onclick="toggleCard(this)">
+      <span class="transport-icon">🚇</span>
+      <span class="transport-title">捷運 / 高鐵 / 台鐵</span>
+      <span class="transport-chevron">▼</span>
+    </div>
+    <div class="transport-body">
+      <div class="transport-item">
+        <span class="tag">板南線</span>
+        <span>板橋站 出口2，右轉沿縣民大道步行約 <strong style="color:var(--gold-lt)">4 分鐘</strong></span>
+      </div>
+      <div class="transport-item">
+        <span class="tag">環狀線</span>
+        <span>板橋站 出口4，右轉沿縣民大道步行約 <strong style="color:var(--gold-lt)">7 分鐘</strong></span>
+      </div>
+      <div class="transport-item">
+        <span class="tag">高鐵/台鐵</span>
+        <span>板橋站 南3門出口，右轉沿縣民大道步行約 <strong style="color:var(--gold-lt)">4 分鐘</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drive -->
+  <div class="transport-card">
+    <div class="transport-head" onclick="toggleCard(this)">
+      <span class="transport-icon">🚗</span>
+      <span class="transport-title">自行開車</span>
+      <span class="transport-chevron">▼</span>
+    </div>
+    <div class="transport-body">
+      <div class="transport-item">
+        <span class="tag">停車場</span>
+        <span>飯店地下停車場 B3–B5，由<strong style="color:var(--gold-lt)">縣民大道進入</strong>，<strong style="color:var(--gold-lt)">民權路離開</strong></span>
+      </div>
+      <div class="transport-item">
+        <span class="tag">南往北</span>
+        <span>沿國道1號接續65線道往板橋，從台65線6-板橋一號出口下交流道，接縣城路，行駛縣民大道一段，前往縣民大道二段，約3分鐘抵達</span>
+      </div>
+      <div class="transport-item">
+        <span class="tag">北往南</span>
+        <span>沿環河快速道路從西藏路出口下交流道，通過華翠大橋，行駛縣民大道三段，前往縣民大道二段，約3分鐘抵達</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Airport -->
+  <div class="transport-card">
+    <div class="transport-head" onclick="toggleCard(this)">
+      <span class="transport-icon">✈️</span>
+      <span class="transport-title">機場抵達</span>
+      <span class="transport-chevron">▼</span>
+    </div>
+    <div class="transport-body">
+      <div class="transport-item">
+        <span class="tag">桃園</span>
+        <span>客運至「板橋客運站」，步行沿縣民大道約 <strong style="color:var(--gold-lt)">7 分鐘</strong></span>
+      </div>
+      <div class="transport-item">
+        <span class="tag">桃園</span>
+        <span>高鐵至「板橋站」南3門出口，步行約 <strong style="color:var(--gold-lt)">4 分鐘</strong></span>
+      </div>
+      <div class="transport-item">
+        <span class="tag">松山</span>
+        <span>文湖線「忠孝復興站」轉板南線至「板橋站」出口2，步行約 <strong style="color:var(--gold-lt)">3 分鐘</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parking nearby -->
+  <div class="transport-card">
+    <div class="transport-head" onclick="toggleCard(this)">
+      <span class="transport-icon">🅿️</span>
+      <span class="transport-title">附近停車場</span>
+      <span class="transport-chevron">▼</span>
+    </div>
+    <div class="transport-body">
+      <div class="parking-grid">
+        <div class="parking-item"><strong>台灣聯通</strong>140 m</div>
+        <div class="parking-item"><strong>民權立體</strong>220 m</div>
+        <div class="parking-item"><strong>板信雙子星</strong>190 m</div>
+        <div class="parking-item"><strong>新光新板大樓</strong>200 m</div>
+        <div class="parking-item"><strong>麗寶百貨</strong>220 m</div>
+        <div class="parking-item"><strong>遠百板橋</strong>250 m</div>
+        <div class="parking-item"><strong>板橋車站</strong>500 m</div>
+        <div class="parking-item"><strong>新北市民廣場</strong>650 m</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-icon">✦</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ══ RSVP ══ -->
+<section>
+  <div class="label">RSVP · 出席回覆</div>
+  <div class="rsvp-title">告訴我們<br>你會來 <em>嗎</em> ？</div>
+  <p class="rsvp-desc">請在 <strong style="color:var(--gold)">2026.05.10</strong> 前填寫，讓我們為每一位賓客準備最好的一切 🌿</p>
+
+  <form id="rsvpForm" novalidate>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">姓名 *</label>
+        <input id="f-name" type="text" class="form-input" placeholder="你的名字" required autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話 *</label>
+        <input id="f-phone" type="tel" class="form-input" placeholder="09XX-XXX" required autocomplete="tel">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">出席人數</label>
+        <select id="f-count" class="form-input">
+          <option value="1">1 人</option>
+          <option value="2" selected>2 人</option>
+          <option value="3">3 人</option>
+          <option value="4">4 人以上</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">飲食需求</label>
+        <select id="f-diet" class="form-input">
+          <option value="none">葷食</option>
+          <option value="veg">素食</option>
+          <option value="allergy">過敏需求</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">給 Forest &amp; Emily 的祝福 ✨</label>
+      <textarea id="f-wish" class="form-input" placeholder="寫下你最真摯的祝福，讓新人感受到你的愛…"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">💌 送出祝福與回覆</button>
+  </form>
+
+  <div class="success-card" id="successCard">
+    <span class="success-icon">🥂</span>
+    <div class="success-title">謝謝你！</div>
+    <p class="success-sub">Forest &amp; Emily 已收到你的回覆<br>非常期待在婚禮上與你相聚 ✨</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Forest &amp; Emily</strong></p>
+  <p>2026.05.30 · 台北新板希爾頓 · 如意廳</p>
+  <p><a href="tel:+886229583000">+886 2 2958 3000</a></p>
+  <p style="margin-top:10px">Made with 🩷 for our special day</p>
+</footer>
+
+<script>
+  /* ── Countdown ── */
+  const WEDDING = new Date('2026-05-30T18:00:00+08:00');
+  const pad = n => String(n).padStart(2,'0');
+  function tick(){
+    const diff = WEDDING - new Date();
+    if(diff <= 0){
+      ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');
+      return;
+    }
+    document.getElementById('cd-d').textContent = Math.floor(diff/864e5);
+    document.getElementById('cd-h').textContent = pad(Math.floor(diff%864e5/36e5));
+    document.getElementById('cd-m').textContent = pad(Math.floor(diff%36e5/6e4));
+    document.getElementById('cd-s').textContent = pad(Math.floor(diff%6e4/1e3));
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ── Accordion ── */
+  function toggleCard(head){
+    head.closest('.transport-card').classList.toggle('open');
+  }
+
+  /* ── Map ── */
+  document.getElementById('btn-map').addEventListener('click', () => {
+    const addr = encodeURIComponent('220690新北市板橋區民權路88號 台北新板希爾頓酒店');
+    if(/iPad|iPhone|iPod/.test(navigator.userAgent)){
+      window.location.href = `maps://maps.apple.com/?q=${addr}`;
+      setTimeout(()=>window.open(`https://maps.google.com/?q=${addr}`,'_blank'), 500);
+    } else {
+      window.open(`https://maps.google.com/?q=${addr}`,'_blank');
+    }
+  });
+
+  /* ── Calendar ── */
+  document.getElementById('btn-cal').addEventListener('click', () => {
+    const t = encodeURIComponent('Forest & Emily 婚禮 🩷');
+    const l = encodeURIComponent('台北新板希爾頓酒店 宴會樓2F如意CDE廳, 220690新北市板橋區民權路88號');
+    window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260530T100000Z/20260530T140000Z&location=${l}&sf=true&output=xml`,'_blank');
+  });
+
+  /* ── Burst ── */
+  const EMOJIS = ['🩷','💕','✨','🌸','💖','🥂','🎊','🫧','🌿','💐','🎀','💒'];
+  function burst(){
+    const c = document.getElementById('particles');
+    for(let i=0;i<20;i++){
+      setTimeout(()=>{
+        const el = document.createElement('div');
+        el.className = 'particle';
+        el.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+        el.style.cssText = `left:${5+Math.random()*90}vw;font-size:${13+Math.random()*19}px;animation-duration:${2+Math.random()*2.5}s`;
+        c.appendChild(el);
+        setTimeout(()=>el.remove(), 5000);
+      }, i*60);
+    }
+  }
+  document.getElementById('btn-heart').addEventListener('click', burst);
+
+  /* ── Form ── */
+  document.getElementById('rsvpForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name  = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    if(!name){ document.getElementById('f-name').focus(); return; }
+    if(!phone){ document.getElementById('f-phone').focus(); return; }
+    this.style.display = 'none';
+    const card = document.getElementById('successCard');
+    card.classList.add('show');
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+    burst();
+  });
+</script>
+</body>
+</html>
