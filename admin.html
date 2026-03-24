@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP 後台 · Forest &amp; Emily</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:     #f5ede0;
+      --bg2:    #ede3d2;
+      --cream:  #faf4ec;
+      --sky:    #3d9abf;
+      --sky-dim:rgba(61,154,191,.1);
+      --sky-b:  rgba(61,154,191,.28);
+      --coffee: #b8895a;
+      --cof-dim:rgba(184,137,90,.12);
+      --cof-b:  rgba(184,137,90,.28);
+      --border: rgba(184,137,90,.22);
+      --text:   #2a1c0e;
+      --muted:  #7a6450;
+      --green:  #4caf82;
+      --red:    #e07070;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Login Gate ── */
+    #loginGate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .login-sub { font-size: 12px; color: var(--muted); margin-bottom: 28px; }
+    .login-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s;
+      margin-bottom: 12px;
+      -webkit-appearance: none;
+    }
+    .login-input:focus { border-color: var(--sky); }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--sky);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .login-btn:active { opacity: .85; }
+    .login-err { font-size: 12px; color: var(--red); margin-top: 10px; display: none; }
+
+    /* ── Dashboard ── */
+    #dashboard { display: none; }
+
+    .topbar {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .topbar-title span { font-style: italic; color: var(--sky); }
+    .topbar-actions { display: flex; gap: 8px; align-items: center; }
+
+    .btn-sm {
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text);
+      transition: all .18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-sm:active { opacity: .75; }
+    .btn-sky { background: var(--sky); border-color: var(--sky); color: #fff; }
+    .btn-red { background: var(--red); border-color: var(--red); color: #fff; }
+
+    .main { padding: 20px 24px 60px; max-width: 900px; margin: 0 auto; }
+
+    /* ── Stats row ── */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 14px 14px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--sky);
+      line-height: 1;
+      display: block;
+    }
+    .stat-lbl { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: 5px; }
+
+    /* ── Table ── */
+    .table-wrap {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--sky); }
+
+    .empty-state {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .empty-icon { font-size: 36px; display: block; margin-bottom: 12px; }
+
+    /* Desktop table */
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 14px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(184,137,90,.1);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(61,154,191,.04); }
+
+    .diet-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .diet-none    { background: var(--cof-dim); color: var(--coffee); }
+    .diet-veg     { background: rgba(76,175,130,.12); color: var(--green); }
+    .diet-allergy { background: rgba(224,112,112,.12); color: var(--red); }
+
+    .wish-text {
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      color: var(--muted);
+    }
+    .wish-text.expanded {
+      white-space: normal;
+      overflow: visible;
+      max-width: 100%;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      opacity: .4;
+      transition: opacity .18s;
+      padding: 2px 4px;
+    }
+    .delete-btn:hover { opacity: 1; }
+
+    /* Mobile cards (< 600px) */
+    @media (max-width: 599px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      td {
+        display: flex;
+        gap: 8px;
+        padding: 8px 16px;
+        border-bottom: none;
+      }
+      td::before {
+        content: attr(data-label);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--coffee);
+        flex-shrink: 0;
+        width: 60px;
+        margin-top: 2px;
+      }
+      tr { border-bottom: 1px solid rgba(184,137,90,.15); padding: 6px 0; }
+      tr:last-child { border-bottom: none; }
+      .wish-text { max-width: 100%; white-space: normal; }
+      .stats { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── Wish modal ── */
+    .modal-bg {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(42,28,14,.4);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-bg.show { display: flex; }
+    .modal-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      max-width: 400px;
+      width: 100%;
+      animation: fadeIn .25s ease;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:scale(.96)} to{opacity:1;transform:scale(1)} }
+    .modal-name { font-weight: 700; font-size: 15px; margin-bottom: 10px; color: var(--sky); }
+    .modal-wish { font-size: 14px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+    .modal-close {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ Login Gate ══ -->
+<div id="loginGate">
+  <div class="login-card">
+    <div class="login-title">Forest <span>&amp; Emily</span></div>
+    <p class="login-sub">RSVP 後台管理 · Admin</p>
+    <input id="pwInput" type="password" class="login-input" placeholder="請輸入管理密碼" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">進入後台</button>
+    <p class="login-err" id="loginErr">密碼錯誤，請再試一次</p>
+  </div>
+</div>
+
+<!-- ══ Dashboard ══ -->
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar-title">Forest <span>&amp; Emily</span> · RSVP</div>
+    <div class="topbar-actions">
+      <button class="btn-sm btn-sky" onclick="exportCSV()">⬇ CSV</button>
+      <button class="btn-sm" onclick="doLogout()">登出</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <span class="stat-num" id="statPeople">0</span>
+        <div class="stat-lbl">回覆人數</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" id="statGuests">0</span>
+        <div class="stat-lbl">出席人數</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" id="statWishes">0</span>
+        <div class="stat-lbl">留下祝福</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-header">
+        <span class="table-label">出席名單 · Guest List</span>
+        <button class="btn-sm btn-red" onclick="clearAll()" id="clearBtn" style="display:none">清空資料</button>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <span class="empty-icon">📋</span>
+        目前還沒有人回覆<br>分享邀請頁面後就會在這裡出現囉
+      </div>
+
+      <table id="guestTable" style="display:none">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>電話</th>
+            <th>人數</th>
+            <th>飲食</th>
+            <th>祝福語</th>
+            <th>時間</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Wish modal -->
+<div class="modal-bg" id="wishModal" onclick="closeModal(event)">
+  <div class="modal-card">
+    <div class="modal-name" id="modalName"></div>
+    <div class="modal-wish" id="modalWish"></div>
+    <button class="modal-close" onclick="document.getElementById('wishModal').classList.remove('show')">關閉</button>
+  </div>
+</div>
+
+<script>
+  /* ── Auth ── simple password, stored in code */
+  const PASS = 'forestemily2026';
+
+  function doLogin(){
+    const pw = document.getElementById('pwInput').value;
+    if(pw === PASS){
+      sessionStorage.setItem('admin_ok','1');
+      document.getElementById('loginGate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      renderTable();
+    } else {
+      document.getElementById('loginErr').style.display = 'block';
+      document.getElementById('pwInput').value = '';
+    }
+  }
+  document.getElementById('pwInput').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+  function doLogout(){
+    sessionStorage.removeItem('admin_ok');
+    location.reload();
+  }
+
+  /* auto-login if session active */
+  if(sessionStorage.getItem('admin_ok')==='1'){
+    document.getElementById('loginGate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+  }
+
+  /* ── Render ── */
+  const dietLabel = { none:'葷食', veg:'素食', allergy:'過敏' };
+  const dietClass = { none:'diet-none', veg:'diet-veg', allergy:'diet-allergy' };
+
+  function getList(){ return JSON.parse(localStorage.getItem('rsvp_list') || '[]'); }
+
+  function renderTable(){
+    const list = getList();
+    const body  = document.getElementById('tableBody');
+    const empty = document.getElementById('emptyState');
+    const table = document.getElementById('guestTable');
+    const clear = document.getElementById('clearBtn');
+
+    /* stats */
+    const totalPeople  = list.length;
+    const totalGuests  = list.reduce((s,r)=>s+parseInt(r.count||1),0);
+    const totalWishes  = list.filter(r=>r.wish).length;
+    document.getElementById('statPeople').textContent  = totalPeople;
+    document.getElementById('statGuests').textContent  = totalGuests;
+    document.getElementById('statWishes').textContent  = totalWishes;
+
+    if(!list.length){
+      empty.style.display = 'block';
+      table.style.display = 'none';
+      clear.style.display = 'none';
+      return;
+    }
+
+    empty.style.display = 'none';
+    table.style.display = 'table';
+    clear.style.display = 'block';
+
+    body.innerHTML = list.map((r,i) => `
+      <tr>
+        <td data-label="序">${i+1}</td>
+        <td data-label="姓名"><strong>${esc(r.name)}</strong></td>
+        <td data-label="電話">${esc(r.phone)}</td>
+        <td data-label="人數">${r.count} 人</td>
+        <td data-label="飲食"><span class="diet-badge ${dietClass[r.diet]||'diet-none'}">${dietLabel[r.diet]||'葷食'}</span></td>
+        <td data-label="祝福">${r.wish
+          ? `<span class="wish-text" onclick="showWish('${esc(r.name)}','${esc(r.wish).replace(/'/g,"&#39;")}')">${esc(r.wish.substring(0,20))}${r.wish.length>20?'…':''}</span>`
+          : '<span style="color:var(--muted);font-size:12px">—</span>'
+        }</td>
+        <td data-label="時間" style="color:var(--muted);font-size:12px">${r.ts||''}</td>
+        <td><button class="delete-btn" onclick="deleteEntry(${r.id})" title="刪除">🗑</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function deleteEntry(id){
+    if(!confirm('確定要刪除這筆資料？')) return;
+    const list = getList().filter(r=>r.id!==id);
+    localStorage.setItem('rsvp_list', JSON.stringify(list));
+    renderTable();
+  }
+
+  function clearAll(){
+    if(!confirm('確定要清空所有資料？此動作無法復原。')) return;
+    localStorage.removeItem('rsvp_list');
+    renderTable();
+  }
+
+  /* ── Wish modal ── */
+  function showWish(name, wish){
+    document.getElementById('modalName').textContent = name + ' 的祝福';
+    document.getElementById('modalWish').textContent = wish;
+    document.getElementById('wishModal').classList.add('show');
+  }
+  function closeModal(e){
+    if(e.target.id==='wishModal') document.getElementById('wishModal').classList.remove('show');
+  }
+
+  /* ── CSV Export ── */
+  function exportCSV(){
+    const list = getList();
+    if(!list.length){ alert('目前沒有資料可以匯出'); return; }
+    const header = ['序號','姓名','電話','出席人數','飲食需求','祝福語','回覆時間'];
+    const rows = list.map((r,i)=>[
+      i+1, r.name, r.phone, r.count,
+      dietLabel[r.diet]||'葷食',
+      '"'+(r.wish||'').replace(/"/g,'""')+'"',
+      r.ts
+    ].join(','));
+    const csv = '\uFEFF' + [header.join(','), ...rows].join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+    a.download = `Forest_Emily_RSVP_${new Date().toLocaleDateString('zh-TW').replace(/\//g,'-')}.csv`;
+    a.click();
+  }
+
+  /* refresh every 30s if logged in */
+  if(sessionStorage.getItem('admin_ok')==='1'){
+    renderTable();
+    setInterval(renderTable, 30000);
+  }
+</script>
+</body>
+</html>
