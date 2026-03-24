@@ -302,17 +302,6 @@
 </head>
 <body>
 
-<!-- ══ Login Gate ══ -->
-<div id="loginGate">
-  <div class="login-card">
-    <div class="login-title">Forest <span>&amp; Emily</span></div>
-    <p class="login-sub">RSVP 後台管理 · Admin</p>
-    <input id="pwInput" type="password" class="login-input" placeholder="請輸入管理密碼" autocomplete="current-password">
-    <button class="login-btn" onclick="doLogin()">進入後台</button>
-    <p class="login-err" id="loginErr">密碼錯誤，請再試一次</p>
-  </div>
-</div>
-
 <!-- ══ Dashboard ══ -->
 <div id="dashboard">
   <div class="topbar">
@@ -381,32 +370,11 @@
 </div>
 
 <script>
-  /* ── Auth ── simple password, stored in code */
-  const PASS = 'forestemily2026';
-
-  function doLogin(){
-    const pw = document.getElementById('pwInput').value;
-    if(pw === PASS){
-      sessionStorage.setItem('admin_ok','1');
-      document.getElementById('loginGate').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      renderTable();
-    } else {
-      document.getElementById('loginErr').style.display = 'block';
-      document.getElementById('pwInput').value = '';
-    }
-  }
-  document.getElementById('pwInput').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+  /* ── No auth — open access ── */
+  document.getElementById('dashboard').style.display = 'block';
 
   function doLogout(){
-    sessionStorage.removeItem('admin_ok');
-    location.reload();
-  }
-
-  /* auto-login if session active */
-  if(sessionStorage.getItem('admin_ok')==='1'){
-    document.getElementById('loginGate').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
+    location.href = 'wedding.html';
   }
 
   /* ── Render ── */
