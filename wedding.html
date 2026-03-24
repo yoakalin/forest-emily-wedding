@@ -21,6 +21,7 @@
 
       /* ☕ coffee — warm secondary accent */
       --coffee:       #b8895a;
+      --coffee-dark:  #5c3317;
       --coffee-lt:    #d4aa80;
       --coffee-dim:   rgba(184,137,90,.12);
       --coffee-border:rgba(184,137,90,.28);
@@ -111,6 +112,7 @@
     .couple-bg-img {
       display: block;
       width: 100%;
+      mix-blend-mode: multiply;
     }
 
     /* Floating confetti */
@@ -129,21 +131,21 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--sky-dim);
-      border: 1px solid var(--sky-border);
+      background: var(--coffee-dim);
+      border: 1px solid var(--coffee-border);
       border-radius: 100px;
       padding: 6px 14px;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--sky);
+      color: var(--coffee);
       width: fit-content;
       margin-bottom: 20px;
     }
     .hero-tag .dot {
       width: 5px; height: 5px;
-      background: var(--sky);
+      background: var(--coffee);
       border-radius: 50%;
       animation: blink 2.4s ease-in-out infinite;
     }
@@ -155,6 +157,7 @@
       font-weight: 700;
       line-height: .92;
       letter-spacing: -.025em;
+      color: var(--coffee-dark);
     }
     .hero-names .em {
       font-style: italic;
@@ -203,7 +206,7 @@
       font-weight: 700;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--sky);
+      color: var(--coffee);
       margin-bottom: 18px;
     }
 
@@ -295,7 +298,7 @@
       font-family: 'Inter', sans-serif;
       font-size: clamp(22px, 6.5vw, 30px);
       font-weight: 900;
-      color: var(--sky);
+      color: var(--coffee-dark);
       line-height: 1;
       display: block;
       letter-spacing: -.03em;
@@ -427,7 +430,7 @@
     .transport-title { flex: 1; font-size: 13px; font-weight: 700; letter-spacing: .03em; }
     .transport-chevron {
       font-size: 11px;
-      color: var(--sky);
+      color: var(--coffee);
       transition: transform .25s;
     }
     .transport-card.open .transport-chevron { transform: rotate(180deg); }
@@ -491,7 +494,7 @@
       line-height: 1.05;
       margin-bottom: 10px;
     }
-    .rsvp-title em { font-style: italic; color: var(--sky); }
+    .rsvp-title em { font-style: italic; color: var(--coffee); }
 
     .rsvp-desc {
       font-size: 13px;
@@ -525,7 +528,7 @@
       appearance: none;
     }
     .form-input::placeholder { color: var(--muted); font-size: 14px; }
-    .form-input:focus { border-color: var(--sky); }
+    .form-input:focus { border-color: var(--coffee); }
     select.form-input { cursor: pointer; }
 
     textarea.form-input {
@@ -860,7 +863,7 @@
 <section>
   <div class="label">RSVP · 出席回覆</div>
   <div class="rsvp-title">告訴我們<br>你會來 <em>嗎</em> ？</div>
-  <p class="rsvp-desc">請在 <strong style="color:var(--gold)">2026.05.15</strong> 前填寫，讓我們為每一位賓客準備最好的一切 🌿</p>
+  <p class="rsvp-desc">請在 <strong style="color:var(--coffee-dark)">2026.03.30</strong> 前填寫，讓我們為每一位賓客準備最好的一切 🌿</p>
 
   <form id="rsvpForm" novalidate>
     <div class="form-row">
