@@ -14,22 +14,28 @@
 
     /* ── Tokens ── */
     :root {
-      --bg:        #f5ede0;
-      --bg2:       #ede3d2;
-      --bg3:       #e4d8c4;
-      --cream:     #faf4ec;
-      --gold:      #9e6f38;
-      --gold-lt:   #c9a074;
-      --gold-dim:  rgba(158,111,56,.1);
-      --border:    rgba(158,111,56,.22);
-      --sky:       #3d9abf;
-      --sky-lt:    #7ec8e3;
-      --sky-dim:   rgba(61,154,191,.1);
-      --sky-border:rgba(61,154,191,.28);
-      --text:      #2a1c0e;
-      --muted:     #7a6450;
-      --r-lg:      18px;
-      --r-md:      12px;
+      --bg:           #f5ede0;
+      --bg2:          #ede3d2;
+      --bg3:          #e4d8c4;
+      --cream:        #faf4ec;
+
+      /* ☕ coffee — warm secondary accent */
+      --coffee:       #b8895a;
+      --coffee-lt:    #d4aa80;
+      --coffee-dim:   rgba(184,137,90,.12);
+      --coffee-border:rgba(184,137,90,.28);
+
+      /* 🩵 sky — primary accent */
+      --sky:          #3d9abf;
+      --sky-lt:       #7ec8e3;
+      --sky-dim:      rgba(61,154,191,.1);
+      --sky-border:   rgba(61,154,191,.28);
+
+      --border:       rgba(184,137,90,.22);
+      --text:         #2a1c0e;
+      --muted:        #7a6450;
+      --r-lg:         18px;
+      --r-md:         12px;
     }
 
     body {
@@ -188,7 +194,7 @@
 
     .hero-rule {
       width: 36px; height: 1px;
-      background: var(--gold);
+      background: var(--coffee);
       margin: 20px 0 14px;
     }
 
@@ -212,7 +218,7 @@
     }
     .scroll-hint .arrow {
       width: 1px; height: 36px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
+      background: linear-gradient(to bottom, var(--coffee), transparent);
       animation: slide 2s ease-in-out infinite;
     }
     @keyframes slide { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(.5);opacity:.3} }
@@ -227,7 +233,7 @@
       font-weight: 700;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--sky);
       margin-bottom: 18px;
     }
 
@@ -238,8 +244,8 @@
       padding: 0 24px;
       margin-bottom: 52px;
     }
-    .divider-line { flex: 1; height: 1px; background: var(--border); }
-    .divider-icon { font-size: 12px; color: var(--gold); }
+    .divider-line { flex: 1; height: 1px; background: var(--coffee-border); }
+    .divider-icon { font-size: 12px; color: var(--coffee); }
 
     /* ══════════════════════════════════
        INFO CARDS
@@ -258,7 +264,8 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(158,111,56,.35), transparent);
+      background: linear-gradient(90deg, transparent, var(--coffee-lt), transparent);
+      opacity: .5;
     }
     .info-card-row {
       display: flex;
@@ -289,13 +296,13 @@
     .info-badge {
       display: inline-flex;
       align-items: center;
-      background: var(--gold-dim);
-      border: 1px solid var(--border);
+      background: var(--coffee-dim);
+      border: 1px solid var(--coffee-border);
       border-radius: 100px;
       padding: 3px 10px;
       font-size: 10px;
       font-weight: 600;
-      color: var(--gold);
+      color: var(--coffee);
       margin-top: 8px;
     }
 
@@ -360,7 +367,7 @@
 
     .btn-left { display: flex; align-items: center; gap: 12px; }
     .btn-icon { font-size: 19px; }
-    .btn-arrow { color: var(--gold); font-size: 18px; transition: transform .18s; }
+    .btn-arrow { color: var(--coffee); font-size: 18px; transition: transform .18s; }
     .btn:active .btn-arrow { transform: translateX(3px); }
 
     .btn-gold {
@@ -370,6 +377,59 @@
     }
     .btn-gold:active { background: var(--sky-lt); border-color: var(--sky-lt); }
     .btn-gold .btn-arrow { color: rgba(255,255,255,.7); }
+
+    /* ══════════════════════════════════
+       MAP & QR
+    ══════════════════════════════════ */
+    .map-card {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .map-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .map-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      margin-bottom: 10px;
+    }
+
+    .qr-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      width: 108px;
+    }
+    .qr-img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    .qr-label {
+      font-size: 9px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+
+    .map-btn {
+      flex: 1;
+    }
 
     /* ══════════════════════════════════
        TRANSPORT
@@ -477,7 +537,7 @@
       font-weight: 700;
       letter-spacing: .2em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--coffee);
       margin-bottom: 8px;
     }
     .form-input {
@@ -725,6 +785,27 @@
 <section>
   <div class="label">Getting Here · 交通資訊</div>
 
+  <!-- Map image -->
+  <div class="map-card">
+    <img src="map.png" alt="Hilton Taipei Sinban 地圖路線" class="map-img"
+         onerror="this.closest('.map-card').style.display='none'">
+  </div>
+
+  <!-- QR + Google Maps row -->
+  <div class="map-row">
+    <div class="qr-card">
+      <img src="qr.png" alt="掃描導航" class="qr-img"
+           onerror="this.closest('.qr-card').style.display='none'">
+      <p class="qr-label">掃描 QR<br>開啟地圖導航</p>
+    </div>
+    <button class="btn map-btn" id="btn-map2">
+      <span class="btn-left"><span class="btn-icon">🗺</span> Google Maps</span>
+      <span class="btn-arrow">→</span>
+    </button>
+  </div>
+
+
+
   <!-- MRT -->
   <div class="transport-card open">
     <div class="transport-head" onclick="toggleCard(this)">
@@ -905,7 +986,7 @@
   }
 
   /* ── Map ── */
-  document.getElementById('btn-map').addEventListener('click', () => {
+  function openMap(){
     const addr = encodeURIComponent('220690新北市板橋區民權路88號 台北新板希爾頓酒店');
     if(/iPad|iPhone|iPod/.test(navigator.userAgent)){
       window.location.href = `maps://maps.apple.com/?q=${addr}`;
@@ -913,7 +994,9 @@
     } else {
       window.open(`https://maps.google.com/?q=${addr}`,'_blank');
     }
-  });
+  }
+  document.getElementById('btn-map').addEventListener('click', openMap);
+  document.getElementById('btn-map2').addEventListener('click', openMap);
 
   /* ── Calendar ── */
   document.getElementById('btn-cal').addEventListener('click', () => {
