@@ -707,6 +707,31 @@
       </div>
     </div>
   </div>
+
+  <div class="info-card">
+    <div class="info-card-row">
+      <span class="info-card-emoji">👨‍👩‍👦</span>
+      <div>
+        <div class="info-card-label">婚禮人 · Wedding Party</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px">
+          <div>
+            <div style="font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--sky);margin-bottom:6px">男方</div>
+            <div style="font-size:15px;line-height:2;color:var(--text)">
+              <span style="color:var(--muted);font-size:13px">父</span> 廖宗何<br>
+              <span style="color:var(--muted);font-size:13px">母</span> 孫毓馡
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--coffee);margin-bottom:6px">女方</div>
+            <div style="font-size:15px;line-height:2;color:var(--text)">
+              <span style="color:var(--muted);font-size:13px">父</span> 林文益<br>
+              <span style="color:var(--muted);font-size:13px">母</span> 陳淑櫻
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ══ COUNTDOWN ══ -->
@@ -732,10 +757,6 @@
   <div class="btn-row">
     <button class="btn" id="btn-map">
       <span class="btn-left"><span class="btn-icon">🗺</span> 一鍵導航到會場</span>
-      <span class="btn-arrow">→</span>
-    </button>
-    <button class="btn" id="btn-cal">
-      <span class="btn-left"><span class="btn-icon">📅</span> 加入行事曆提醒</span>
       <span class="btn-arrow">→</span>
     </button>
     <button class="btn btn-gold" id="btn-heart">
@@ -807,7 +828,7 @@
     <div class="transport-body">
       <div class="transport-item">
         <span class="tag">停車場</span>
-        <span>飯店地下停車場 B3–B5，由<strong style="color:var(--gold-lt)">縣民大道進入</strong>，<strong style="color:var(--gold-lt)">民權路離開</strong></span>
+        <span>飯店地下停車場 B3–B5，由<strong style="color:var(--gold-lt)">縣民大道進入</strong>，<strong style="color:var(--gold-lt)">民權路離開</strong>。<strong style="color:var(--sky)">希爾頓停車場免費</strong> 🎉</span>
       </div>
       <div class="transport-item">
         <span class="tag">南往北</span>
@@ -843,26 +864,6 @@
     </div>
   </div>
 
-  <!-- Parking nearby -->
-  <div class="transport-card">
-    <div class="transport-head" onclick="toggleCard(this)">
-      <span class="transport-icon">🅿️</span>
-      <span class="transport-title">附近停車場</span>
-      <span class="transport-chevron">▼</span>
-    </div>
-    <div class="transport-body">
-      <div class="parking-grid">
-        <div class="parking-item"><strong>台灣聯通</strong>140 m</div>
-        <div class="parking-item"><strong>民權立體</strong>220 m</div>
-        <div class="parking-item"><strong>板信雙子星</strong>190 m</div>
-        <div class="parking-item"><strong>新光新板大樓</strong>200 m</div>
-        <div class="parking-item"><strong>麗寶百貨</strong>220 m</div>
-        <div class="parking-item"><strong>遠百板橋</strong>250 m</div>
-        <div class="parking-item"><strong>板橋車站</strong>500 m</div>
-        <div class="parking-item"><strong>新北市民廣場</strong>650 m</div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <div class="divider">
@@ -875,7 +876,7 @@
 <section>
   <div class="label">RSVP · 出席回覆</div>
   <div class="rsvp-title">告訴我們<br>你會來 <em>嗎</em> ？</div>
-  <p class="rsvp-desc">請在 <strong style="color:var(--coffee-dark)">2026.03.30</strong> 前填寫，讓我們為每一位賓客準備最好的一切 🌿</p>
+  <p class="rsvp-desc">請在 <strong style="color:var(--coffee-dark)">2026.04.20</strong> 前填寫，讓我們為每一位賓客準備最好的一切 🌿</p>
 
   <form id="rsvpForm" novalidate>
     <div class="form-row">
@@ -896,7 +897,13 @@
           <option value="1">1 人</option>
           <option value="2" selected>2 人</option>
           <option value="3">3 人</option>
-          <option value="4">4 人以上</option>
+          <option value="4">4 人</option>
+          <option value="5">5 人</option>
+          <option value="6">6 人</option>
+          <option value="7">7 人</option>
+          <option value="8">8 人</option>
+          <option value="9">9 人</option>
+          <option value="10">10 人</option>
         </select>
       </div>
       <div class="form-group">
@@ -904,7 +911,6 @@
         <select id="f-diet" class="form-input">
           <option value="none">葷食</option>
           <option value="veg">素食</option>
-          <option value="allergy">過敏需求</option>
         </select>
       </div>
     </div>
@@ -927,7 +933,6 @@
 <footer>
   <p><strong>廖柏豪 &amp; 林書宇</strong></p>
   <p>2026.05.24 · 台北新板希爾頓 · 如意廳</p>
-  <p><a href="tel:+886229583000">+886 2 2958 3000</a></p>
   <p style="margin-top:10px">Made with 🩷 for our special day</p>
 </footer>
 
@@ -965,13 +970,6 @@
   }
   document.getElementById('btn-map').addEventListener('click', openMap);
   document.getElementById('btn-map2').addEventListener('click', openMap);
-
-  /* ── Calendar ── */
-  document.getElementById('btn-cal').addEventListener('click', () => {
-    const t = encodeURIComponent('廖柏豪 & 林書宇 文定之喜 🩷');
-    const l = encodeURIComponent('台北新板希爾頓酒店 宴會樓2F如意CDE廳, 220690新北市板橋區民權路88號');
-    window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260524T040000Z/20260524T080000Z&location=${l}&sf=true&output=xml`,'_blank');
-  });
 
   /* ── Burst ── */
   const EMOJIS = ['🩷','💕','✨','🌸','💖','🥂','🎊','🫧','🌿','💐','🎀','💒'];
