@@ -302,6 +302,17 @@
 </head>
 <body>
 
+<!-- ══ Login Gate ══ -->
+<div id="loginGate">
+  <div class="login-card">
+    <div class="login-title">後台管理</div>
+    <p class="login-sub">Forest &amp; Emily · RSVP Admin</p>
+    <input id="pwInput" type="password" class="login-input" placeholder="請輸入密碼" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">進入</button>
+    <p class="login-err" id="loginErr">密碼錯誤，請再試一次</p>
+  </div>
+</div>
+
 <!-- ══ Dashboard ══ -->
 <div id="dashboard">
   <div class="topbar">
@@ -370,11 +381,37 @@
 </div>
 
 <script>
-  /* ── No auth — open access ── */
-  document.getElementById('dashboard').style.display = 'block';
+  /* ── Auth ── */
+  const ADMIN_PW = '1234';
+
+  function doLogin(){
+    const val = document.getElementById('pwInput').value;
+    if(val === ADMIN_PW){
+      sessionStorage.setItem('admin_ok','1');
+      document.getElementById('loginGate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      renderTable();
+      setInterval(renderTable, 30000);
+    } else {
+      document.getElementById('loginErr').style.display = 'block';
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').focus();
+    }
+  }
+
+  document.getElementById('pwInput').addEventListener('keydown', e => {
+    if(e.key === 'Enter') doLogin();
+  });
 
   function doLogout(){
-    location.href = 'wedding.html';
+    sessionStorage.removeItem('admin_ok');
+    location.reload();
+  }
+
+  /* Init */
+  if(sessionStorage.getItem('admin_ok') === '1'){
+    document.getElementById('loginGate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
   }
 
   /* ── Render ── */
@@ -469,11 +506,8 @@
     a.click();
   }
 
-  /* refresh every 30s if logged in */
-  if(sessionStorage.getItem('admin_ok')==='1'){
-    renderTable();
-    setInterval(renderTable, 30000);
-  }
+  /* Auto-render on load if already logged in */
+  if(sessionStorage.getItem('admin_ok') === '1') renderTable();
 </script>
 </body>
 </html>
