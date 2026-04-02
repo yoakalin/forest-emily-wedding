@@ -414,26 +414,35 @@
     document.getElementById('dashboard').style.display = 'block';
   }
 
+  /* ── Supabase config ── */
+  const SB_URL = 'SUPABASE_URL';
+  const SB_KEY = 'SUPABASE_ANON_KEY';
+
   /* ── Render ── */
   const dietLabel = { none:'葷食', veg:'素食', allergy:'過敏' };
   const dietClass = { none:'diet-none', veg:'diet-veg', allergy:'diet-allergy' };
 
-  function getList(){ return JSON.parse(localStorage.getItem('rsvp_list') || '[]'); }
+  async function getList(){
+    const res = await fetch(`${SB_URL}/rest/v1/rsvp?order=id.asc`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    });
+    if(!res.ok) return [];
+    return res.json();
+  }
 
-  function renderTable(){
-    const list = getList();
+  async function renderTable(){
+    const list = await getList();
     const body  = document.getElementById('tableBody');
     const empty = document.getElementById('emptyState');
     const table = document.getElementById('guestTable');
     const clear = document.getElementById('clearBtn');
 
-    /* stats */
-    const totalPeople  = list.length;
-    const totalGuests  = list.reduce((s,r)=>s+parseInt(r.count||1),0);
-    const totalWishes  = list.filter(r=>r.wish).length;
-    document.getElementById('statPeople').textContent  = totalPeople;
-    document.getElementById('statGuests').textContent  = totalGuests;
-    document.getElementById('statWishes').textContent  = totalWishes;
+    const totalPeople = list.length;
+    const totalGuests = list.reduce((s,r)=>s+parseInt(r.count||1),0);
+    const totalWishes = list.filter(r=>r.wish).length;
+    document.getElementById('statPeople').textContent = totalPeople;
+    document.getElementById('statGuests').textContent = totalGuests;
+    document.getElementById('statWishes').textContent = totalWishes;
 
     if(!list.length){
       empty.style.display = 'block';
@@ -465,16 +474,21 @@
 
   function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-  function deleteEntry(id){
+  async function deleteEntry(id){
     if(!confirm('確定要刪除這筆資料？')) return;
-    const list = getList().filter(r=>r.id!==id);
-    localStorage.setItem('rsvp_list', JSON.stringify(list));
+    await fetch(`${SB_URL}/rest/v1/rsvp?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    });
     renderTable();
   }
 
-  function clearAll(){
+  async function clearAll(){
     if(!confirm('確定要清空所有資料？此動作無法復原。')) return;
-    localStorage.removeItem('rsvp_list');
+    await fetch(`${SB_URL}/rest/v1/rsvp?id=gte.0`, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    });
     renderTable();
   }
 
@@ -489,8 +503,8 @@
   }
 
   /* ── CSV Export ── */
-  function exportCSV(){
-    const list = getList();
+  async function exportCSV(){
+    const list = await getList();
     if(!list.length){ alert('目前沒有資料可以匯出'); return; }
     const header = ['序號','姓名','電話','出席人數','飲食需求','祝福語','回覆時間'];
     const rows = list.map((r,i)=>[
@@ -507,7 +521,7 @@
   }
 
   /* Auto-render on load if already logged in */
-  if(sessionStorage.getItem('admin_ok') === '1') renderTable();
+  if(sessionStorage.getItem('admin_ok') === '1'){ renderTable(); setInterval(renderTable, 30000); }
 </script>
 </body>
 </html>

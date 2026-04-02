@@ -653,12 +653,13 @@
   <div class="hero-fg">
     <div class="hero-tag">
       <span class="dot"></span>
-      文定之喜 · Engagement Ceremony
+      文定之喜<br><span style="font-size:12px;letter-spacing:.12em;opacity:.8">Engagement Ceremony</span>
     </div>
     <div class="hero-names">
       廖柏豪 <span class="em">林書宇</span>
       <span class="hero-names-en">Forrest &amp; Emily</span>
     </div>
+    <p style="font-size:15px;color:var(--muted);letter-spacing:.06em;margin-top:10px">願此生此世，執子之手，與子偕老</p>
     <div class="hero-rule"></div>
     <p class="hero-sub">2026.05.24 · 台北新板希爾頓</p>
   </div>
@@ -682,7 +683,7 @@
           <div>
             <div style="font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--sky);margin-bottom:6px">男方</div>
             <div style="font-size:15px;line-height:2;color:var(--text)">
-              <span style="color:var(--muted);font-size:13px">郎</span> 廖柏豪<br>
+              廖柏豪<br>
               <span style="color:var(--muted);font-size:13px">父</span> 廖宗何<br>
               <span style="color:var(--muted);font-size:13px">母</span> 孫毓馡
             </div>
@@ -690,7 +691,7 @@
           <div>
             <div style="font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--coffee);margin-bottom:6px">女方</div>
             <div style="font-size:15px;line-height:2;color:var(--text)">
-              <span style="color:var(--muted);font-size:13px">媳</span> 林書宇<br>
+              林書宇<br>
               <span style="color:var(--muted);font-size:13px">父</span> 林文益<br>
               <span style="color:var(--muted);font-size:13px">母</span> 陳淑櫻
             </div>
@@ -993,27 +994,49 @@
   }
   document.getElementById('btn-heart').addEventListener('click', burst);
 
+  /* ── Supabase config ── */
+  const SB_URL  = 'SUPABASE_URL';
+  const SB_KEY  = 'SUPABASE_ANON_KEY';
+
   /* ── Form ── */
-  document.getElementById('rsvpForm').addEventListener('submit', function(e){
+  document.getElementById('rsvpForm').addEventListener('submit', async function(e){
     e.preventDefault();
     const name  = document.getElementById('f-name').value.trim();
     const phone = document.getElementById('f-phone').value.trim();
     if(!name){ document.getElementById('f-name').focus(); return; }
     if(!phone){ document.getElementById('f-phone').focus(); return; }
 
-    /* save to localStorage */
+    const btn = this.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.textContent = '送出中…';
+
     const entry = {
-      id: Date.now(),
-      ts: new Date().toLocaleString('zh-TW'),
+      ts:    new Date().toLocaleString('zh-TW'),
       name,
       phone,
-      count: document.getElementById('f-count').value,
+      count: parseInt(document.getElementById('f-count').value),
       diet:  document.getElementById('f-diet').value,
       wish:  document.getElementById('f-wish').value.trim()
     };
-    const existing = JSON.parse(localStorage.getItem('rsvp_list') || '[]');
-    existing.push(entry);
-    localStorage.setItem('rsvp_list', JSON.stringify(existing));
+
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/rsvp`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(entry)
+      });
+      if(!res.ok) throw new Error(res.status);
+    } catch(err) {
+      btn.disabled = false;
+      btn.textContent = '💌 送出祝福與回覆';
+      alert('送出失敗，請稍後再試');
+      return;
+    }
 
     this.style.display = 'none';
     const card = document.getElementById('successCard');
