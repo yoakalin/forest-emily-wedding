@@ -209,17 +209,9 @@
     .diet-allergy { background: rgba(224,112,112,.12); color: var(--red); }
 
     .wish-text {
-      max-width: 180px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      cursor: pointer;
       color: var(--muted);
-    }
-    .wish-text.expanded {
       white-space: normal;
-      overflow: visible;
-      max-width: 100%;
+      word-break: break-word;
     }
 
     .delete-btn {
@@ -344,7 +336,6 @@
     <div class="table-wrap">
       <div class="table-header">
         <span class="table-label">出席名單 · Guest List</span>
-        <button class="btn-sm btn-red" onclick="clearAll()" id="clearBtn" style="display:none">清空資料</button>
       </div>
 
       <div class="empty-state" id="emptyState">
@@ -435,7 +426,6 @@
     const body  = document.getElementById('tableBody');
     const empty = document.getElementById('emptyState');
     const table = document.getElementById('guestTable');
-    const clear = document.getElementById('clearBtn');
 
     const totalPeople = list.length;
     const totalGuests = list.reduce((s,r)=>s+parseInt(r.count||1),0);
@@ -447,13 +437,11 @@
     if(!list.length){
       empty.style.display = 'block';
       table.style.display = 'none';
-      clear.style.display = 'none';
       return;
     }
 
     empty.style.display = 'none';
     table.style.display = 'table';
-    clear.style.display = 'block';
 
     body.innerHTML = list.map((r,i) => `
       <tr>
@@ -463,7 +451,7 @@
         <td data-label="人數">${r.count} 人</td>
         <td data-label="飲食"><span class="diet-badge ${dietClass[r.diet]||'diet-none'}">${dietLabel[r.diet]||'葷食'}</span></td>
         <td data-label="祝福">${r.wish
-          ? `<span class="wish-text" onclick="showWish('${esc(r.name)}','${esc(r.wish).replace(/'/g,"&#39;")}')">${esc(r.wish.substring(0,20))}${r.wish.length>20?'…':''}</span>`
+          ? `<span class="wish-text">${esc(r.wish)}</span>`
           : '<span style="color:var(--muted);font-size:12px">—</span>'
         }</td>
         <td data-label="時間" style="color:var(--muted);font-size:12px">${r.ts||''}</td>
@@ -477,15 +465,6 @@
   async function deleteEntry(id){
     if(!confirm('確定要刪除這筆資料？')) return;
     await fetch(`${SB_URL}/rest/v1/rsvp?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
-    });
-    renderTable();
-  }
-
-  async function clearAll(){
-    if(!confirm('確定要清空所有資料？此動作無法復原。')) return;
-    await fetch(`${SB_URL}/rest/v1/rsvp?id=gte.0`, {
       method: 'DELETE',
       headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
     });
